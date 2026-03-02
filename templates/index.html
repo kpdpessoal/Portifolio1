@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block title %}Upload de Arquivos{% endblock %} {% block
+content %}
+<h1>Upload de Arquivos</h1>
+
+{% if message %}
+<p>{{ message }}</p>
+{% endif %}
+
+<form action="/upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" required />
+  <button type="submit">Enviar</button>
+</form>
+
+<p>Extensões permitidas: pdf, png, jpg, jpeg, csv, xlsx, txt. Limite: 25MB.</p>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %} 
+{% block title %}Lista de Arquivos{% endblock %} 
+{% block content %}
+<h1>Arquivos Cadastrados</h1>
+
+<table border="1" cellpadding="8" style="border-collapse: collapse; width: 100%; text-align: left;">
+  <thead>
+    <tr>
+      <th>Nome do Arquivo</th>
+      <th>Tamanho</th>
+      <th>Enviado por</th>
+      <th>Data de Envio</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for file in files %}
+    <tr>
+      <td>{{ file.original_name }}</td>
+      <td>{{ (file.size_bytes / 1024 / 1024)|round(2) }} MB</td>
+      <td>{{ file.uploaded_by }}</td>
+      <td>{{ file.uploaded_at.strftime('%d/%m/%Y %H:%M') }}</td>
+      <td>
+        <!-- Botão Download -->
+        <a href="/files/{{ file.filename }}" style="margin-right: 10px;">Baixar</a>
+        
+        <!-- Botão Excluir -->
+        <form action="/delete/{{ file.id }}" method="post" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir?');">
+          <button type="submit" style="color: red; cursor: pointer;">Excluir</button>
+        </form>
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="5">Nenhum arquivo ativo no sistema.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br>
+<a href="/">Voltar para Upload</a>
+{% endblock %}
